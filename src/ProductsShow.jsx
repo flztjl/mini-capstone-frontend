@@ -1,33 +1,47 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 export function ProductsShow(props) {
+  const [product, setProduct] = useState({});
+  const params = useParams();
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/products/${params.id}.json`).then((response) => {
+      console.log(response.data);
+      setProduct(response.data);
+    });
+  }, [params.id]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const params = new FormData(event.target);
-    props.onUpdateProduct(props.product.id, params, () => event.target.reset());
+    const formData = new FormData(event.target);
+    props.onUpdateProduct(product.id, formData, () => event.target.reset());
   };
 
   const handleClick = () => {
-    props.onDestroyProduct(props.product);
+    props.onDestroyProduct(product);
   };
 
   return (
     <div>
       <h1>Product information</h1>
-      <p>Name: {props.product.name}</p>
-      <img src={props.product.url} />
-      <p>Description: {props.product.description}</p>
-      <p>Price: {props.product.price}</p>
+      <p>Name: {product.name}</p>
+      <img src={product.url} alt={product.name} />
+      <p>Description: {product.description}</p>
+      <p>Price: {product.price}</p>
       <form onSubmit={handleSubmit}>
         <div>
-          Name: <input defaultValue={props.product.name} name="name" type="text" />
+          Name: <input defaultValue={product.name} name="name" type="text" />
         </div>
         <div>
-          Image: <input defaultValue={props.product.url} name="url" type="text" />
+          Image: <input defaultValue={product.url} name="url" type="text" />
         </div>
         <div>
-          Description: <input defaultValue={props.product.description} name="description" type="text" />
+          Description: <input defaultValue={product.description} name="description" type="text" />
         </div>
         <div>
-          Price: <input defaultValue={props.product.price} name="price" type="text" />
+          Price: <input defaultValue={product.price} name="price" type="text" />
         </div>
         <button type="submit">Update product</button>
       </form>

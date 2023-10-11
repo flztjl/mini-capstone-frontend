@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import { ProductsIndex } from "./ProductsIndex";
 import { ProductsNew } from "./ProductsNew";
 import { ProductsShow } from "./ProductsShow";
 import { Modal } from "./Modal";
+import { Signup } from "./Signup";
+import { Login } from "./Login";
 
 export function Content() {
   const [products, setProducts] = useState([]);
   const [isProductsShowVisible, setIsProductsShowVisible] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState({});
+  const [currentProduct] = useState({});
 
   const handleIndexProducts = () => {
     console.log("handleIndexProducts");
@@ -16,20 +19,6 @@ export function Content() {
       console.log(response.data);
       setProducts(response.data);
     });
-  };
-
-  const handleCreateProduct = (params, successCallback) => {
-    console.log("handleCreateProduct", params);
-    axios.post("/products.json", params).then((response) => {
-      setProducts([...products, response.data]);
-      successCallback();
-    });
-  };
-
-  const handleShowProduct = (product) => {
-    console.log("handleShowProduct", product);
-    setIsProductsShowVisible(true);
-    setCurrentProduct(product);
   };
 
   const handleClose = () => {
@@ -40,15 +29,7 @@ export function Content() {
   const handleUpdateProduct = (id, params, successCallback) => {
     console.log("handleUpdateProduct", params);
     axios.patch(`/products/${id}.json`, params).then((response) => {
-      setProducts(
-        products.map((product) => {
-          if (product.id === response.data.id) {
-            return response.data;
-          } else {
-            return product;
-          }
-        })
-      );
+      setProducts(products.map((product) => (product.id === response.data.id ? response.data : product)));
       successCallback();
       handleClose();
     });
@@ -76,16 +57,22 @@ export function Content() {
   useEffect(handleIndexProducts, []);
 
   return (
-    <div>
-      <ProductsNew onCreateProduct={handleCreateProduct} />
-      <ProductsIndex products={products} onShowProduct={handleShowProduct} />
-      <Modal show={isProductsShowVisible} onClose={handleClose}>
-        <ProductsShow
-          product={currentProduct}
-          onUpdateProduct={handleUpdateProduct}
-          onDestroyProduct={handleDestroyProduct}
-        />
-      </Modal>
-    </div>
+    <main>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/products" element={<ProductsIndex products={products} />} />
+        <Route path="/products/new" element={<ProductsNew />} />
+        {isProductsShowVisible && (
+          <Modal show={isProductsShowVisible} onClose={handleClose}>
+            <ProductsShow
+              product={currentProduct}
+              onUpdateProduct={handleUpdateProduct}
+              onDestroyProduct={handleDestroyProduct}
+            />
+          </Modal>
+        )}
+      </Routes>
+    </main>
   );
 }
