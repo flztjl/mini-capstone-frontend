@@ -5,6 +5,7 @@ export function LogoutLink() {
     event.preventDefault();
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("jwt");
+    localStorage.setItem("flashMessage", "Logged out successfully!");
     window.location.href = "/";
   };
 

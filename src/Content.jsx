@@ -7,8 +7,9 @@ import { ProductsShow } from "./ProductsShow";
 import { Modal } from "./Modal";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
+import { Home } from "./Home";
 
-export function Content() {
+export const Content = () => {
   const [products, setProducts] = useState([]);
   const [isProductsShowVisible, setIsProductsShowVisible] = useState(false);
   const [currentProduct] = useState({});
@@ -60,6 +61,7 @@ export function Content() {
     <main>
       <Routes>
         <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<ProductsIndex products={products} />} />
         <Route path="/products/new" element={<ProductsNew />} />
@@ -75,4 +77,4 @@ export function Content() {
       </Routes>
     </main>
   );
-}
+};
