@@ -8,11 +8,13 @@ import { Modal } from "./Modal";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { Home } from "./Home";
+import { SearchBar } from "./SearchBar";
 
-export const Content = () => {
+export const Content = (props) => {
   const [products, setProducts] = useState([]);
   const [isProductsShowVisible, setIsProductsShowVisible] = useState(false);
   const [currentProduct] = useState({});
+  const [searchFilter, setSearchFilter] = useState("");
 
   const handleIndexProducts = () => {
     console.log("handleIndexProducts");
@@ -61,7 +63,7 @@ export const Content = () => {
     <main>
       <Routes>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home products={products.slice(0, 6)} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<ProductsIndex products={products} />} />
         <Route path="/products/new" element={<ProductsNew />} />
@@ -75,6 +77,14 @@ export const Content = () => {
           </Modal>
         )}
       </Routes>
+      {props.searchVisible && (
+        <SearchBar
+          setSearchVisible={props.setSearchVisible}
+          searchFilter={searchFilter}
+          setSearchFilter={setSearchFilter}
+          products={products}
+        />
+      )}
     </main>
   );
 };

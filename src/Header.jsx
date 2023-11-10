@@ -1,24 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogoutLink } from "./LogoutLink";
-import { Image } from "./App";
-import { useState } from "react";
-import { SearchBar } from "./SearchBar";
+import { useState, useEffect } from "react";
+import logoImage from "./assets/images/logo.png"; // Adjust the path if necessary
 
-export const Header = ({ searchFilter, setSearchFilter }) => {
+export const Header = ({ setSearchVisible }) => {
   // Define the handleMenuClick function
   // State to manage if the menu is open or not
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false); // New state for search bar visibility
+  const navigate = useNavigate();
 
   const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
+    setSearchVisible(true);
+    navigate("/products");
+    setIsSearchOpen((prev) => !prev);
   };
 
   const handleMenuClick = () => {
     // Implement what should happen when the menu icon is clicked.
     // For example, you might toggle a mobile menu:
     setIsMenuOpen(!isMenuOpen);
-    console.log("Menu icon clicked");
   };
 
   // Determine the menu icon class based on the isMenuOpen state
@@ -27,7 +28,7 @@ export const Header = ({ searchFilter, setSearchFilter }) => {
   return (
     <header className="fixed w-full top-0 right-0 z-50 flex items-center justify-between px-10 py-5 bg-white">
       <div className="logo">
-        <Image imageName="logo.png" className="max-w-xs h-auto ml-[-50px]" alt="Logo" />
+        <img src={logoImage} className="w-[300px] h-auto -ml-12" alt="Logo" />
       </div>
       <nav>
         <ul className="flex space-x-4">
@@ -69,19 +70,22 @@ export const Header = ({ searchFilter, setSearchFilter }) => {
           </li>
         </ul>
       </nav>
-      <div className="nav-icon flex space-x-4">
-        <Link to="#" onClick={toggleSearch} className="text-gray-700 hover:text-gray-900 transition duration-300">
-          <i className="bx bx-search"></i>
+      <div className="nav-icon flex space-x-5 items-center">
+        <Link to="#" onClick={toggleSearch} className="text-gray-700 hover:text-[#ee1c47] transition duration-300">
+          <i className="bx bx-search text-3xl mr-5 hover:scale-110 transition-transform duration-300"></i>
         </Link>
-        <Link to="/profile" className="text-gray-700 hover:text-gray-900 transition duration-300">
-          <i className="bx bx-user"></i>
+        <Link to="/profile" className="text-gray-700 hover:text-[#ee1c47] transition duration-300">
+          <i className="bx bx-user text-3xl mr-5 hover:scale-110 transition-transform duration-300"></i>
         </Link>
-        <Link to="/cart" className="text-gray-700 hover:text-gray-900 transition duration-300">
-          <i className="bx bx-cart"></i>
+        <Link to="/cart" className="text-gray-700 hover:text-[#ee1c47] transition duration-300">
+          <i className="bx bx-cart text-3xl mr-5 hover:scale-110 transition-transform duration-300"></i>
         </Link>
-        <div className={menuIconClass} id="menu-icon" onClick={handleMenuClick}></div>
+        <div
+          className={`${menuIconClass} text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-transform duration-300`}
+          id="menu-icon"
+          onClick={handleMenuClick}
+        ></div>
       </div>
-      {isSearchOpen && <SearchBar searchFilter={searchFilter} setSearchFilter={setSearchFilter} />}
     </header>
   );
 };

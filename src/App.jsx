@@ -20,6 +20,7 @@ export const Image = ({ imageName }) => {
 
 export const App = () => {
   const [flashMessage, setFlashMessage] = useState("");
+  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     if (localStorage.flashMessage) {
@@ -31,9 +32,9 @@ export const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header />
+        <Header setSearchVisible={setSearchVisible} />
         <div onClick={() => setFlashMessage(null)}>{flashMessage}</div>
-        <Content />
+        <Content searchVisible={searchVisible} setSearchVisible={setSearchVisible} />
         <Footer />
       </BrowserRouter>
     </div>

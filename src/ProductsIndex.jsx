@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { Header } from "./Header";
-import { SearchBar } from "./SearchBar";
-
 export const ProductsIndex = (props) => {
-  const [searchFilter, setSearchFilter] = useState("");
+  const products = props.products;
 
   return (
     <div className="container mx-auto px-4 pt-20">
-      <Header /* { ...headerProps } */ />
-      <SearchBar searchFilter={searchFilter} setSearchFilter={setSearchFilter} products={props.products} />
       <div className="container mx-auto px-4 pt-20">
         <h1 className="text-3xl font-bold text-center my-6">All products</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {props.products.map((product) => (
+          {products.map((product) => (
             <div key={product.id} className="card bg-white shadow-md rounded-lg overflow-hidden">
               {product.images && product.images[0] && (
                 <img

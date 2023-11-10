@@ -1,203 +1,51 @@
-import "./index.css";
-import { Image } from "./App";
+import backgroundImage from "./assets/images/banner-3.png"; // Adjust the path if necessary
 
-export const Home = () => {
+export const Home = (props) => {
+  // const firstSixProducts = props.products.slice(0, 6);
+
   return (
     <>
-      <section className="main-home">
-        <div className="main-text">
-          <h5>Black Friday Event</h5>
-          <h1>
-            Winter Sales <br /> Event 2023
-          </h1>
-          <p>Big savings is coming</p>
-
-          <a href="#" className="main-btn">
-            Shop Now <i className="bx bx-right-arrow-alt"></i>
+      {/* Background image section */}
+      <div
+        className="bg-cover bg-center h-screen flex items-center justify-start pl-20"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        <div>
+          <h2 className="text-3xl md:text-5xl font-bold uppercase text-left">Winter Collection</h2>
+          <p className="text-xl md:text-2xl my-4 text-left">New Winter Collection 2022</p>
+          <p className="mb-6 text-left">There&apos;s Nothing like Trend</p>
+          <a
+            href="#trending"
+            className="text-white bg-blue-600 px-6 py-3 rounded-full inline-block font-semibold text-left"
+          >
+            Shop Now
           </a>
         </div>
+      </div>
 
-        <div className="down-arrow">
-          <a href="#trending" className="down">
-            <i className="bx bx-down-arrow-alt"></i>
-          </a>
-        </div>
-      </section>
-
-      <section className="trending-product" id="trending">
-        <div className="center-text">
-          <h2>
-            Our Trending <span>products</span>
-          </h2>
-        </div>
-
-        <div className="products">
-          <div className="row">
-            <Image imageName="1.jpg" alt="" />
-            <div className="product-text">
-              <h5>Sale</h5>
+      {/* Trending products section */}
+      <section id="trending" className="container mx-auto px-4 pt-16 pb-12 max-w-5xl">
+        <h2 className="text-3xl font-bold text-center mb-12">Our Trending products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {props.products.map((product) => (
+            <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+              <img
+                src={product.images[0].url} // Assuming 'images' is an array and 'url' is the image URL
+                alt={product.name}
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-1 truncate">{product.name}</h3>
+                <p className="text-gray-600 mb-4">${product.price}</p>
+                <a
+                  href={`/products/${product.id}`}
+                  className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
+                >
+                  More info
+                </a>
+              </div>
             </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-            <div className="price">
-              <h4>Half Running Set</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="2.jpg" alt="" />
-            <div className="product-text">
-              <h5>New</h5>
-            </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-            <div className="price">
-              <h4>Formal Men Lowers</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="3.jpg" alt="" />
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-
-            <div className="price">
-              <h4>Half Running Suit</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="4.jpg" alt="" />
-            <div className="product-text">
-              <h5>Hot</h5>
-            </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-            <div className="price">
-              <h4>Half Fancy Lady Dress</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="5.jpg" alt="" />
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-
-            <div className="price">
-              <h4>Flix Flox Jeans</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="6.jpg" alt="" />
-            <div className="product-text">
-              <h5>Hot</h5>
-            </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-
-            <div className="price">
-              <h4>Fancy Salwar Suits</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="7.jpg" alt="" />
-            <div className="product-text">
-              <h5>Sale</h5>
-            </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-
-            <div className="price">
-              <h4>Printed Straight Kurta</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <Image imageName="8.jpg" alt="" />
-            <div className="product-text">
-              <h5>Sale</h5>
-            </div>
-            <div className="heart-icon">
-              <i className="bx bx-heart"></i>
-            </div>
-            <div className="ratting">
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bx-star"></i>
-              <i className="bx bxs-star-half"></i>
-            </div>
-
-            <div className="price">
-              <h4>Collot Full Dress</h4>
-              <p>$99 - $129</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </>
