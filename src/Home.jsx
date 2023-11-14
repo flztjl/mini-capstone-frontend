@@ -30,7 +30,7 @@ export const Home = (props) => {
           {props.products.map((product) => (
             <div key={product.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
               <img
-                src={product.images[0].url} // Assuming 'images' is an array and 'url' is the image URL
+                src={product.images[0].image_url} // Assuming 'images' is an array and 'url' is the image URL
                 alt={product.name}
                 className="w-full h-64 object-cover"
               />

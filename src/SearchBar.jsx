@@ -25,11 +25,20 @@ export const SearchBar = ({ setSearchVisible, searchFilter, setSearchFilter, pro
     };
 
     // Function to handle click events
-    const handleClickOutside = (e) => {
+    const handleClickOutside = () => {
+      console.log("Document was clicked");
+      const { target } = event;
+      const isSearchBarContainer = target.closest("#search-bar-container") !== null;
+      const isSearchIcon = target.closest("#search-icon") !== null;
+
+      console.log(`Is Click Inside SearchBar: ${isSearchBarContainer}`);
+      console.log(`Is Click Inside SearchIcon: ${isSearchIcon}`);
+
       // Assuming your search bar has a unique ref or id
-      if (!e.target.closest("#search-bar-container")) {
+      if (!isSearchBarContainer && !isSearchIcon) {
+        console.log("Should close the search bar now");
         // Call the function that closes the search bar here
-        // setSearchVisible(false);
+        setSearchVisible(false);
       }
     };
 
@@ -42,11 +51,15 @@ export const SearchBar = ({ setSearchVisible, searchFilter, setSearchFilter, pro
       window.removeEventListener("keydown", handleKeyPress);
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, [setSearchVisible]); // Empty dependency array means this effect runs once on mount
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center" id="search-bar-container">
-      <div className="w-full max-w-lg p-4 bg-white shadow-lg rounded" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div
+        className="absolute left-1/2 transform -translate-x-1/2 mt-[-500px] w-full max-w-lg p-4 bg-white shadow-lg rounded"
+        id="search-bar-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <input
           type="text"
           value={searchFilter}

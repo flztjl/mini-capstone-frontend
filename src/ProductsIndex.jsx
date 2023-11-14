@@ -8,9 +8,9 @@ export const ProductsIndex = (props) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map((product) => (
             <div key={product.id} className="card bg-white shadow-md rounded-lg overflow-hidden">
-              {product.images && product.images[0] && (
+              {product.images && product.images.length > 0 && (
                 <img
-                  src={product.images[0].url}
+                  src={product.images[0].image_url}
                   alt={product.name}
                   className="w-full h-64 object-cover object-center"
                 />
@@ -22,7 +22,7 @@ export const ProductsIndex = (props) => {
                   href={`/products/${product.id}`}
                   className="text-md text-blue-500 hover:text-blue-700 transition duration-300"
                 >
-                  More info
+                  Details
                 </a>
               </div>
             </div>
